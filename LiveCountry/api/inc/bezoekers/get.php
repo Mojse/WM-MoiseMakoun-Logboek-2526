@@ -1,7 +1,7 @@
 <?php
 // --- "Get" alle producten  
 
-$sql="select id, artist, date, hour, venue, price FROM concerten";
+$sql="select id, first_name, last_name, birth_date, email FROM bezoekers";
 
 // geen prepared statement nodig, aangezien we geen parameters
 // van de gebruiker verwerken.
