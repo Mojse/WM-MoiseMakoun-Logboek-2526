@@ -5,19 +5,18 @@ header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
     
-if (!isset($_GET['concert_id']) || !ctype_digit($_GET['concert_id'])) {
-    echo json_encode(['status' => 400, 'error' => 'Geen geldig concert_id']);
+if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
+    echo json_encode(['status' => 400, 'error' => 'Geen geldig id']);
     exit;
 }
-$concert_id = (int) $_GET['concert_id'];
+$id = (int) $_GET['id'];
 
-$sql = "SELECT b.*
-        FROM bezoekers b
-        JOIN tickets t ON t.bezoeker_id = b.id
-        WHERE t.concert_id = ?";
+$sql = "DELETE 
+        FROM bezoekers
+        WHERE bezoekers.id = ?";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $concert_id);
+$stmt->bind_param('i', $id);
 $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_all(MYSQLI_ASSOC);

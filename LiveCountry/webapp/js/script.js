@@ -1,21 +1,29 @@
-let btnConcerten = document.querySelector("#btnConcerten");
-let btnBezoekers = document.querySelector("#btnBezoekers");
 let concerten = document.querySelector(".concerten");
 let bezoekers = document.querySelector(".bezoekers");
+let concert__section = document.querySelector(".concert__section");
+
+// Alle functieknoppen
 let btnDetails = document.querySelector("#btnDetails");
 let btnDetailsB = document.querySelector("#btnDetailsB");
+let btnDelete = document.querySelector("#btnDelete");
+let btnDeleteB = document.querySelector("#btnDeleteB");
+
+let concertBezoekers = document.querySelector(".concert__bezoekers");
+let bezoekerConcerten = document.querySelector(".bezoeker__concerten");
 let concertData = [];
 let bezoekerData = [];
 let isShwon = false;
 let isShwonB = false;
+let showMessage = false;
 
 
 let baseApiAddress = "https://makoun.be/LiveCountry/api/";
 
+getApiConcerten();
+getApiBezoekers();
+
 async function getApiConcerten() {
-    if (isShwon == true) {
-        return;
-    }
+    concerten.innerHTML = "";
     let url = baseApiAddress + "concerten.php";
     try {
         const response = await fetch(url)
@@ -32,12 +40,16 @@ async function getApiConcerten() {
             concerten.innerHTML += `<tr>
                                         <th>Artist</th>
                                         <th>Date</th>
-                                        <th>Details</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                     <tr>
                                         <td>${line.artist}</td>
                                         <td>${line.date}</td>
                                         <td><button type="button" class="btnDetails" data-id="${line.id}">Details</button></td>
+                                        <td><button type="button" class="btnEdit" data-id="${line.id}">Edit</button></td>
+                                        <td><button type="button" class="btnDelete" data-id="${line.id}">Delete</button></td>
                                     </tr>`
         });
 
@@ -67,12 +79,16 @@ async function getApiBezoekers() {
             bezoekers.innerHTML += `<tr>
                                         <th>First Name</th>
                                         <th>last Name</th>
-                                        <th>Details</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                     <tr>
                                         <td>${line.first_name}</td>
                                         <td>${line.last_name}</td>
                                         <td><button type="button" class="btnDetailsB" data-id="${line.id}">Details</button></td>
+                                        <td><button type="button" class="btnEditB" data-id="${line.id}">Edit</button></td>
+                                        <td><button type="button" class="btnDeleteB" data-id="${line.id}">Delete</button></td>
                                     </tr>`
         });
 
@@ -108,6 +124,7 @@ function getDetails(id) {
                             <td>${concert.venue}</td>
                             <td>${concert.price}</td>
                         </tr>`
+    getConcertBezoekers(concert.id);
 }
 
 function getDetailsB(id) {
@@ -134,19 +151,97 @@ function getDetailsB(id) {
                             <td>${bezoeker.birth_date}</td>
                             <td>${bezoeker.email}</td>
                         </tr>`
+    getBezoekerConcerten(bezoeker.id);
 }
 
+async function getConcertBezoekers(id){
+    concertBezoekers.innerHTML = "";
+    console.log(id);
+    const url = baseApiAddress + `tickets.php?concert_id=${id}`;
 
-btnConcerten.addEventListener("click", getApiConcerten);
+    let response = await fetch(url);
+    try {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.message}`);
+        }
+
+        const result = await response.json();
+        console.log(result);
+
+        result.data.forEach(b => {
+            concertBezoekers.innerHTML += `<div>${b.first_name} ${b.last_name}</div>`;
+        });
+    } catch (error) {
+        
+    }
+}
+
+async function getBezoekerConcerten(id){
+    bezoekerConcerten.innerHTML = "";
+    console.log(id);
+    const url = baseApiAddress + `tickets.php?bezoeker_id=${id}`;
+
+    let response = await fetch(url);
+    try {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.message}`);
+        }
+
+        const result = await response.json();
+        console.log(result);
+
+        result.data.forEach(c => {
+            bezoekerConcerten.innerHTML += `<div>${c.artist} ${c.date}</div>`;
+        });
+    } catch (error) {
+        
+    }
+}
+
+async function deleteConcert(id){
+    console.log(id);
+    const url = baseApiAddress + `concerten.php?id=${id}`;
+
+    let response = await fetch(url, { method: 'DELETE' });
+    try {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.message}`);
+        }
+    } catch (error) {
+    }
+
+    location.reload();
+}
+
+async function deleteBezoeker(id){
+    console.log(id);
+    const url = baseApiAddress + `bezoekers.php?id=${id}`;
+
+    let response = await fetch(url, { method: 'DELETE' });
+    try {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.message}`);
+        }
+    } catch (error) {
+    }
+
+    location.reload();
+}
+
 concerten.addEventListener('click', function (e) {
     if (e.target.classList.contains('btnDetails')) {
         getDetails(e.target.dataset.id);
     }
+    if (e.target.classList.contains('btnDelete')) {
+        deleteConcert(e.target.dataset.id);
+    }
 });
 
-btnBezoekers.addEventListener("click", getApiBezoekers);
 bezoekers.addEventListener('click', function (e) {
     if (e.target.classList.contains('btnDetailsB')) {
         getDetailsB(e.target.dataset.id);
+    }
+    if (e.target.classList.contains('btnDeleteB')) {
+        deleteBezoeker(e.target.dataset.id);
     }
 });

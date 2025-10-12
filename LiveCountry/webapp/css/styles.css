@@ -17,3 +17,7 @@ section{
     border: 1px solid #f00;
     width: 100%;
 }
+
+.ok_message{
+	color: #080;
+}

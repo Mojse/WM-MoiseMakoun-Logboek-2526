@@ -9,7 +9,7 @@ if (!isset($_GET['bezoeker_id']) || !ctype_digit($_GET['bezoeker_id'])) {
     echo json_encode(['status' => 400, 'error' => 'Geen geldig concert_id']);
     exit;
 }
-$concert_id = (int) $_GET['bezoeker_id'];
+$bezoeker_id = (int) $_GET['bezoeker_id'];
 
 $sql = "SELECT c.*
         FROM concerten c
@@ -17,7 +17,7 @@ $sql = "SELECT c.*
         WHERE t.bezoeker_id = ?";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $concert_id);
+$stmt->bind_param('i', $bezoeker_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_all(MYSQLI_ASSOC);

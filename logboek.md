@@ -14,3 +14,4 @@
 - data en details tonen in html voor bezoekers en concerten gelukt
 - alle bezoekers voor elk concerten tonen ✅
 - alle concerten voor elke bezoeker tonen ✅
+- delete voor concerten en bezoekers ✅
