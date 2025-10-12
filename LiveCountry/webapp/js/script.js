@@ -1,6 +1,8 @@
 let concerten = document.querySelector(".concerten");
 let bezoekers = document.querySelector(".bezoekers");
 let concert__section = document.querySelector(".concert__section");
+let btnBuy = document.querySelector("#btnBuy");
+let bezoeker__section = document.querySelector(".bezoeker__section");
 
 // edit
 let editID = 0;
@@ -487,6 +489,76 @@ async function addBezoeker(e) {
     }
 }
 
+function buyTicket() {
+  bezoeker__section.innerHTML = `
+    <h3>Koop Ticket</h3>
+    <label>Bezoeker</label>
+    <select id="selectBezoeker">
+      ${bezoekerData.map(b => `
+        <option value="${b.id}">
+          ${b.first_name} ${b.last_name}
+        </option>
+      `).join("")}
+    </select>
+
+    <label>Concert</label>
+    <select id="selectConcert">
+      ${concertData.map(c => `
+        <option value="${c.id}">
+          ${c.artist} (${c.date})
+        </option>
+      `).join("")}
+    </select>
+
+    <button id="btnBuyTicket" class="sendBoughtTicket">Koop Ticket</button>
+  `;
+}
+
+async function sendTicket(e) {
+    if (e) e.preventDefault();
+
+    const bezoekerSel = document.getElementById('selectBezoeker');
+    const concertSel  = document.getElementById('selectConcert');
+
+    if (!bezoekerSel || !concertSel) {
+        alert('Selects niet gevonden.');
+        return;
+    }
+
+    const bezoeker_id = bezoekerSel.value;
+    const concert_id  = concertSel.value;
+
+    if (!bezoeker_id || !concert_id) {
+        alert('Kies een bezoeker en een concert.');
+        return;
+    }
+
+    try {
+        const url = baseApiAddress + 'tickets.php';
+
+        const resp = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bezoeker_id, concert_id })
+        });
+
+        const result = await resp.json();
+
+        if (!resp.ok || result.status < 200 || result.status > 299) {
+        alert(result.message || 'Ticket kopen mislukt.');
+        return;
+        }
+
+        location.reload();
+
+    } catch (err) {
+        alert('Fout bij ticket kopen: ' + err.message);
+    }
+}
+
+
+
+
 concerten.addEventListener('click', function (e) {
     if (e.target.classList.contains('btnDetails')) {
         getDetails(e.target.dataset.id);
@@ -511,6 +583,12 @@ bezoekers.addEventListener('click', function (e) {
     }
 });
 
+bezoeker__section.addEventListener('click', function (e) {
+    if (e.target.classList.contains('sendBoughtTicket')) {
+        sendTicket(e.target.dataset.id);
+    }
+});
+
 btnEdit.addEventListener('click', sendEdit);
 btnEditB.addEventListener('click', sendEditB);
 btnAdd.addEventListener('click', () => {
@@ -521,3 +599,4 @@ btnAddB.addEventListener('click', () => {
   document.querySelector('.addB__container').removeAttribute('hidden');
 });
 btnAddBApi.addEventListener('click', addBezoeker);
+btnBuy.addEventListener('click', buyTicket);
