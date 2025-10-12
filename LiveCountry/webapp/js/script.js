@@ -1,23 +1,30 @@
 let concerten = document.querySelector(".concerten");
 let bezoekers = document.querySelector(".bezoekers");
 let concert__section = document.querySelector(".concert__section");
-let edit_container = document.querySelector(".edit__container");
+
+// edit
+let editID = 0;
 let btnEdit = document.querySelector("#btnEdit");
+let btnEditB = document.querySelector("#btnEditB");
+let edit_container = document.querySelector(".edit__container");
+let editB_container = document.querySelector(".editB__container");
+
+// add
 let btnAdd = document.querySelector("#btnAdd");
 let btnAddApi = document.querySelector("#btnAddApi");
 let btnAddB = document.querySelector("#btnAddB");
 let btnAddBApi = document.querySelector("#btnAddBApi");
-let editID = 0;
 
-
-// Alle functieknoppen
+// details
 let btnDetails = document.querySelector("#btnDetails");
 let btnDetailsB = document.querySelector("#btnDetailsB");
+
+// delete 
 let btnDelete = document.querySelector("#btnDelete");
 let btnDeleteB = document.querySelector("#btnDeleteB");
-
 let concertBezoekers = document.querySelector(".concert__bezoekers");
 let bezoekerConcerten = document.querySelector(".bezoeker__concerten");
+
 let concertData = [];
 let bezoekerData = [];
 let isShwon = false;
@@ -260,8 +267,138 @@ async function editConcert(id){
     }
 }
 
-async function sendEdit(){
+async function sendEdit(e) {
+    e.preventDefault();
 
+    if (!editID) {
+        alert('Geen concert geselecteerd.');
+        return;
+    }
+
+    const artist = document.getElementById('concert_artist').value.trim();
+    const date   = document.getElementById('concert_date').value.trim();
+    const hour   = document.getElementById('concert_hour').value.trim();
+    const venue  = document.getElementById('concert_venue').value.trim();
+    const price  = document.getElementById('concert_price').value.trim();
+
+    if (!artist || !date || !hour || !venue) {
+        alert('Vul alle velden in.');
+        return;
+    }
+
+    try {
+        const url = baseApiAddress + 'concerten.php'; // of 'concerten/' als je router dat doet
+
+        const opties = {
+            method: 'PUT',
+            body: JSON.stringify({
+                id: editID,
+                artist: artist,
+                date: date,
+                hour: hour,
+                venue: venue,
+                price: price
+            })
+        };
+
+        const response = await fetch(url, opties);
+        const result = await response.text();
+
+        if (result.status < 200 || result.status > 299) {
+            alert('Aanpassen mislukt.');
+            return;
+        }
+
+        document.querySelector('.edit__container').setAttribute('hidden', true);
+        document.getElementById('concert_artist').value = '';
+        document.getElementById('concert_date').value   = '';
+        document.getElementById('concert_hour').value   = '';
+        document.getElementById('concert_venue').value  = '';
+        document.getElementById('concert_price').value  = '';
+
+        editID = 0;
+        location.reload();
+
+    } catch (err) {
+        alert('fout : ' + err);
+    }
+}
+
+async function editBezoeker(id){
+    console.log(id);
+    editID = id;
+    editB_container.removeAttribute("hidden");
+    const url = baseApiAddress + `bezoekers.php?id=${id}`;
+
+    let response = await fetch(url);
+    try {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.message}`);
+        }
+
+        let result = await response.json();
+        console.log(result);
+
+        document.getElementById("bezoeker_firstName").value = result.data.first_name;
+        document.getElementById("bezoeker_lastName").value = result.data.last_name;
+        document.getElementById("bezoeker_birthDate").value = result.data.birth_date;
+        document.getElementById("bezoeker_email").value = result.data.email;
+    } catch (error) {
+    }
+}
+
+async function sendEditB(e) {
+    e.preventDefault();
+
+    if (!editID) {
+        alert('Geen bezoeker geselecteerd.');
+        return;
+    }
+
+    const first_name = document.getElementById('bezoeker_firstName').value.trim();
+    const last_name   = document.getElementById('bezoeker_lastName').value.trim();
+    const birth_date   = document.getElementById('bezoeker_birthDate').value.trim();
+    const email  = document.getElementById('bezoeker_email').value.trim();
+
+    if (!first_name || !last_name || !birth_date || !email) {
+        alert('Vul alle velden in.');
+        return;
+    }
+
+    try {
+        const url = baseApiAddress + 'bezoekers.php'; 
+
+        const opties = {
+            method: 'PUT',
+            body: JSON.stringify({
+                id: editID,
+                first_name: first_name,
+                last_name: last_name,
+                birth_date: birth_date,
+                email: email
+            })
+        };
+
+        const response = await fetch(url, opties);
+        const result = await response.text();
+
+        if (result.status < 200 || result.status > 299) {
+            alert('Aanpassen mislukt.');
+            return;
+        }
+
+        document.querySelector('.editB__container').setAttribute('hidden', true);
+        document.getElementById('bezoeker_firstName').value = '';
+        document.getElementById('bezoeker_lastName').value   = '';
+        document.getElementById('bezoeker_birthDate').value   = '';
+        document.getElementById('bezoeker_email').value  = '';
+
+        editID = 0;
+        location.reload();
+
+    } catch (err) {
+        alert('fout : ' + err);
+    }
 }
 
 async function addConcert(e) {
@@ -369,9 +506,13 @@ bezoekers.addEventListener('click', function (e) {
     if (e.target.classList.contains('btnDeleteB')) {
         deleteBezoeker(e.target.dataset.id);
     }
+    if (e.target.classList.contains('btnEditB')) {
+        editBezoeker(e.target.dataset.id);
+    }
 });
 
 btnEdit.addEventListener('click', sendEdit);
+btnEditB.addEventListener('click', sendEditB);
 btnAdd.addEventListener('click', () => {
   document.querySelector('.add__container').removeAttribute('hidden');
 });

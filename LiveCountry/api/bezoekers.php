@@ -19,6 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	exit;
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+  require 'inc/bezoekers/edit.php';
+  exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 	require 'inc/bezoekers/delete.php';
 	exit;

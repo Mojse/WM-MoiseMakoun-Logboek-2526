@@ -16,3 +16,4 @@
 - alle concerten voor elke bezoeker tonen ✅
 - delete voor concerten en bezoekers ✅
 - post lukt voor allebei
+- put lukt ook voor allebei

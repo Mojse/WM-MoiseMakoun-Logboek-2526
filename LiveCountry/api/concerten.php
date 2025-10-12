@@ -24,10 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-  require '/inc/concerten/edit.php';
+  require 'inc/concerten/edit.php';
   exit;
 }
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 	require 'inc/concerten/delete.php';
