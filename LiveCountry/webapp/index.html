@@ -13,24 +13,77 @@
 
     <main>
         <section class="concert__section">
-            <h2>Concerten</h2>
+            <h2>Concerts</h2>
             <table class="concerten" hidden></table>
             <div class="details__container" hidden>
                 <h2>Details</h2>
                 <table class="details"></table>
-                <h3>Bezoekers</h3>
+                <h3>Visitors</h3>
                 <div class="concert__bezoekers"></div>
+            </div>
+            <div class="edit__container" hidden>
+                <label for="concert_artist" >Artist</label>
+                <input type="text" id="concert_artist">
+
+                <label for="concert_date">Date</label>
+                <input type="text" id="concert_date">
+
+                <label for="concert_hour">Hour</label>
+                <input type="text" id="concert_hour">
+
+                <label for="concert_venue">Venue</label>
+                <input type="text" id="concert_venue">
+
+                <label for="concert_price">Price</label>
+                <input type="text" id="concert_price">
+
+                <button type="submit" id="btnEdit">Send</button>
+            </div>
+            <button type="submit" id="btnAdd">Add concert</button>
+            <div class="add__container" hidden>
+                <label for="concert_artist" >Artist</label>
+                <input type="text" id="add_artist">
+
+                <label for="concert_date">Date</label>
+                <input type="text" id="add_date">
+
+                <label for="concert_hour">Hour</label>
+                <input type="text" id="add_hour">
+
+                <label for="concert_venue">Venue</label>
+                <input type="text" id="add_venue">
+
+                <label for="concert_price">Price</label>
+                <input type="text" id="add_price">
+
+                <button type="submit" id="btnAddApi">Send</button>
             </div>
         </section>
 
         <section>
-            <h2>Bezoekers</h2>
+            <h2>Visistors</h2>
             <table class="bezoekers" hidden></table>
             <div class="detailsB__container" hidden>
                 <h2>Details</h2>
                 <table class="detailsB"></table>
-                <h3>Concerten</h3>
+                <h3>Concerts</h3>
                 <div class="bezoeker__concerten"></div>
+            </div>
+            <button type="submit" id="btnAddB">Add visitor</button>
+            <div class="addB__container" hidden>
+                <label for="concert_artist" >First name</label>
+                <input type="text" id="add_firstName">
+
+                <label for="concert_date">Last name</label>
+                <input type="text" id="add_lastName">
+
+                <label for="concert_hour">Birth date</label>
+                <input type="text" id="add_birthDate">
+
+                <label for="concert_venue">E-mail</label>
+                <input type="text" id="add_email">
+
+                <button type="submit" id="btnAddBApi">Send</button>
             </div>
         </section>
     </main>

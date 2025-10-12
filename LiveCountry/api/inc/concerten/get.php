@@ -1,30 +1,50 @@
 <?php
-// --- "Get" alle producten  
 
-$sql="select id, artist, date, hour, venue, price FROM concerten";
+require_once __DIR__ . '/../dbcon.php'; 
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
 
-// geen prepared statement nodig, aangezien we geen parameters
-// van de gebruiker verwerken.
+$response = [];
 
-$result = $conn -> query($sql);
+if (isset($_GET['id']) && ctype_digit($_GET['id'])) {
 
-if (!$result) {
-	$response['code'] = 7;
-	$response['status'] = $api_response_code[$response['code']]['HTTP Response'];
-	$response['data'] = $conn->error;
-	deliver_response($response);
+    $concert_id = (int) $_GET['id'];
+
+    $sql = "SELECT id, artist, `date`, `hour`, venue, price 
+            FROM concerten 
+            WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $concert_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        $response['status'] = 200;
+        $response['data'] = $result->fetch_assoc();
+    } else {
+        $response['status'] = 404;
+        $response['error'] = "Concert met id=$concert_id niet gevonden.";
+    }
+
+    $stmt->close();
+} else {
+
+    $sql = "SELECT id, artist, `date`, `hour`, venue, price FROM concerten";
+    $result = $conn->query($sql);
+
+    if (!$result) {
+        $response['status'] = 500;
+        $response['error'] = $conn->error;
+    } else {
+        $response['status'] = 200;
+        $response['data'] = $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    $result->free();
 }
 
-// Vorm de resultset om naar een structuur die we makkelijk kunnen 
-// doorgeven en stop deze in $response['data']
-$response['data'] = getJsonObjFromResult($result); // -> fetch_all(MYSQLI_ASSOC)
-// maak geheugen vrij op de server door de resultset te verwijderen
-$result->free();
-// sluit de connectie met de databank
 $conn->close();
-// Return Response to browser
-deliver_JSONresponse($response);
-//deliver_response($response);
-
+echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 exit;
 ?>

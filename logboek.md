@@ -15,3 +15,4 @@
 - alle bezoekers voor elk concerten tonen ✅
 - alle concerten voor elke bezoeker tonen ✅
 - delete voor concerten en bezoekers ✅
+- post lukt voor allebei

@@ -1,6 +1,14 @@
 let concerten = document.querySelector(".concerten");
 let bezoekers = document.querySelector(".bezoekers");
 let concert__section = document.querySelector(".concert__section");
+let edit_container = document.querySelector(".edit__container");
+let btnEdit = document.querySelector("#btnEdit");
+let btnAdd = document.querySelector("#btnAdd");
+let btnAddApi = document.querySelector("#btnAddApi");
+let btnAddB = document.querySelector("#btnAddB");
+let btnAddBApi = document.querySelector("#btnAddBApi");
+let editID = 0;
+
 
 // Alle functieknoppen
 let btnDetails = document.querySelector("#btnDetails");
@@ -228,12 +236,129 @@ async function deleteBezoeker(id){
     location.reload();
 }
 
+async function editConcert(id){
+    console.log(id);
+    editID = id;
+    edit_container.removeAttribute("hidden");
+    const url = baseApiAddress + `concerten.php?id=${id}`;
+
+    let response = await fetch(url);
+    try {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.message}`);
+        }
+
+        let result = await response.json();
+        console.log(result);
+
+        document.getElementById("concert_artist").value = result.data.artist;
+        document.getElementById("concert_date").value = result.data.date;
+        document.getElementById("concert_hour").value = result.data.hour;
+        document.getElementById("concert_venue").value = result.data.venue;
+        document.getElementById("concert_price").value = result.data.price;
+    } catch (error) {
+    }
+}
+
+async function sendEdit(){
+
+}
+
+async function addConcert(e) {
+    e.preventDefault();
+
+    const artist = document.getElementById('add_artist').value.trim();
+    const date   = document.getElementById('add_date').value.trim();
+    const hour   = document.getElementById('add_hour').value.trim();
+    const venue  = document.getElementById('add_venue').value.trim();
+    const price  = document.getElementById('add_price').value.trim();
+
+    try {
+        const url = baseApiAddress + 'concerten.php';
+
+        const resp = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ artist, date, hour, venue, price })
+        });
+
+        if (!resp.ok) {
+            const t = await resp.text();
+            throw new Error(`Serverfout (${resp.status}): ${t}`);
+        }
+
+        const result = await resp.json();
+        if (result.status < 200 || result.status > 299) {
+            throw new Error(result.message || 'Toevoegen mislukt');
+        }
+
+        document.querySelector('.add__container').setAttribute('hidden', true);
+        document.getElementById('add_artist').value = '';
+        document.getElementById('add_date').value   = '';
+        document.getElementById('add_hour').value   = '';
+        document.getElementById('add_venue').value  = '';
+        document.getElementById('add_price').value  = '';
+
+        location.reload();
+
+    } catch (err) {
+        alert(`Fout bij toevoegen: ${err.message}`);
+    }
+}
+
+async function addBezoeker(e) {
+    e.preventDefault();
+
+    const first_name = document.getElementById('add_firstName').value.trim();
+    const last_name   = document.getElementById('add_lastName').value.trim();
+    const birth_date   = document.getElementById('add_birthDate').value.trim();
+    const email  = document.getElementById('add_email').value.trim();
+
+    try {
+        const url = baseApiAddress + 'bezoekers.php';
+
+        const resp = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ first_name, last_name, birth_date, email })
+        });
+
+        if (!resp.ok) {
+            const t = await resp.text();
+            throw new Error(`Serverfout (${resp.status}): ${t}`);
+        }
+
+        const result = await resp.json();
+        if (result.status < 200 || result.status > 299) {
+            throw new Error(result.message || 'Toevoegen mislukt');
+        }
+
+        document.querySelector('.addB__container').setAttribute('hidden', true);
+        document.getElementById('add_firstName').value = '';
+        document.getElementById('add_lastName').value   = '';
+        document.getElementById('add_birthDate').value   = '';
+        document.getElementById('add_email').value  = '';
+
+        location.reload();
+
+    } catch (err) {
+        alert(`Fout bij toevoegen: ${err.message}`);
+    }
+}
+
 concerten.addEventListener('click', function (e) {
     if (e.target.classList.contains('btnDetails')) {
         getDetails(e.target.dataset.id);
     }
     if (e.target.classList.contains('btnDelete')) {
         deleteConcert(e.target.dataset.id);
+    }
+    if (e.target.classList.contains('btnEdit')) {
+        editConcert(e.target.dataset.id);
     }
 });
 
@@ -245,3 +370,13 @@ bezoekers.addEventListener('click', function (e) {
         deleteBezoeker(e.target.dataset.id);
     }
 });
+
+btnEdit.addEventListener('click', sendEdit);
+btnAdd.addEventListener('click', () => {
+  document.querySelector('.add__container').removeAttribute('hidden');
+});
+btnAddApi.addEventListener('click', addConcert);
+btnAddB.addEventListener('click', () => {
+  document.querySelector('.addB__container').removeAttribute('hidden');
+});
+btnAddBApi.addEventListener('click', addBezoeker);
