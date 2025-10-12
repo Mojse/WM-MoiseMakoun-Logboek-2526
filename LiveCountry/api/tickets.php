@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { require __DIR__ . '/inc/tickets/add.php'; exit; }
-// (optioneel) GET/DELETE hier ook routen
+
 echo json_encode(['status'=>405,'message'=>'Method Not Allowed','data'=>[]]);
 exit;
 

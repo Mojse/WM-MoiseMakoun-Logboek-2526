@@ -6,7 +6,6 @@ $raw = file_get_contents('php://input');
 $postvars = json_decode($raw, true);
 if (!is_array($postvars)) { $postvars = $_POST; }
 
-// Vereiste velden checken
 $required = ['first_name','last_name','birth_date','email'];
 $missing = [];
 foreach ($required as $k) {
@@ -22,13 +21,11 @@ if (!empty($missing)) {
     exit;
 }
 
-// Types casten / saneren
 $first_name = trim($postvars['first_name']);
-$last_name   = trim($postvars['last_name']);   // yyyy-mm-dd (of zoals jouw dataset gebruikt)
-$birth_date   = trim($postvars['birth_date']);   // hh:mm
+$last_name   = trim($postvars['last_name']); 
+$birth_date   = trim($postvars['birth_date']);
 $email  = trim($postvars['email']);
 
-// Prepared statement
 $sql = "INSERT INTO bezoekers (first_name, last_name, birth_date, email) VALUES (?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 if (!$stmt) {

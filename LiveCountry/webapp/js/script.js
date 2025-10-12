@@ -289,7 +289,7 @@ async function sendEdit(e) {
     }
 
     try {
-        const url = baseApiAddress + 'concerten.php'; // of 'concerten/' als je router dat doet
+        const url = baseApiAddress + 'concerten.php';
 
         const opties = {
             method: 'PUT',
