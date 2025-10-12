@@ -18,3 +18,7 @@
 - post lukt voor allebei
 - put lukt ook voor allebei
 - gewerkt aan de opmaak
+- koop ticket toegpast
+
+# url naar website:
+- https://makoun.be/LiveCountry/webapp/
