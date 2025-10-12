@@ -12,3 +12,5 @@
 - Ik gebruik deze site: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch om mijn javascript fetch skills nog eens op te frissen. 
 - fetch gelukt, tabel aangemaakt in js
 - data en details tonen in html voor bezoekers en concerten gelukt
+- alle bezoekers voor elk concerten tonen ✅
+- alle concerten voor elke bezoeker tonen ✅
