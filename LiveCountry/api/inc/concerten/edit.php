@@ -1,13 +1,11 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
-// $conn via dbcon.php, ingeladen door concerten.php
 
 $raw = file_get_contents('php://input');
 $postvars = json_decode($raw, true);
 if (!is_array($postvars)) { $postvars = $_POST; }
 
-// verplicht: id + alle velden
-$required = ['id','first_name','last_name','birth_date','email'];
+$required = ['id','artist','date','hour','venue','price'];
 $missing = [];
 foreach ($required as $k) {
     if (!isset($postvars[$k]) || $postvars[$k] === '') { $missing[] = $k; }
@@ -18,19 +16,20 @@ if (!empty($missing)) {
 }
 
 $id     = (int)$postvars['id'];
-$first_name = trim($postvars['first_name']);
-$last_name   = trim($postvars['last_name']);
-$birth_date   = trim($postvars['birth_date']);
-$email  = trim($postvars['email']);
+$artist = trim($postvars['artist']);
+$date   = trim($postvars['date']);
+$hour   = trim($postvars['hour']);
+$venue  = trim($postvars['venue']);
+$price  = (float)$postvars['price'];
 
-$sql = "UPDATE bezoekers SET first_name=?, last_name=?, birth_date=?, email=? WHERE id=?";
+$sql = "UPDATE concerten SET artist=?, date=?, hour=?, venue=?, price=? WHERE id=?";
 $stmt = $conn->prepare($sql);
 if (!$stmt) {
     echo json_encode(['status'=>500,'message'=>'prepare failed','data'=>[]]);
     return;
 }
 
-if (!$stmt->bind_param("ssssi", $first_name, $last_name, $birth_date, $email, $id)) {
+if (!$stmt->bind_param("ssssdi", $artist, $date, $hour, $venue, $price, $id)) {
     echo json_encode(['status'=>500,'message'=>'bind failed','data'=>[]]);
     $stmt->close();
     return;
@@ -49,7 +48,7 @@ echo json_encode([
   'status'=>200,
   'message'=> $affected === 0 ? 'No changes (record unchanged)' : 'Record updated successfully',
   'data'=>[[
-    'id'=>$id,'first_name'=>$first_name,'last_name'=>$last_name,'birth_date'=>$birth_date,'email'=>$email
+    'id'=>$id,'artist'=>$artist,'date'=>$date,'hour'=>$hour,'venue'=>$venue,'price'=>$price
   ]]
 ]);
 return;

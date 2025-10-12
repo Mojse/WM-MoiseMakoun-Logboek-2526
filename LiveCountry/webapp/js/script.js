@@ -53,8 +53,8 @@ async function getApiConcerten() {
         concerten.removeAttribute("hidden");
         result.data.forEach(line => {
             concerten.innerHTML += `<tr>
-                                        <th>Artist</th>
-                                        <th>Date</th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -92,8 +92,8 @@ async function getApiBezoekers() {
         bezoekers.removeAttribute("hidden");
         result.data.forEach(line => {
             bezoekers.innerHTML += `<tr>
-                                        <th>First Name</th>
-                                        <th>last Name</th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>

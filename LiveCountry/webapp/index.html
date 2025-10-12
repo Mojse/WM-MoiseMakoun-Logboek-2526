@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Home</title>
 </head>
 <body>
@@ -21,7 +22,7 @@
                 <h3>Visitors</h3>
                 <div class="concert__bezoekers"></div>
             </div>
-            <div class="edit__container" hidden>
+            <div class="edit__container" id="form" hidden>
                 <h3>Edit</h3>
                 <label for="concert_artist" >Artist</label>
                 <input type="text" id="concert_artist">
@@ -38,10 +39,10 @@
                 <label for="concert_price">Price</label>
                 <input type="text" id="concert_price">
 
-                <button type="submit" id="btnEdit">Send</button>
+                <button type="submit" id="btnEdit" class="btnSend">Send</button>
             </div>
-            <button type="submit" id="btnAdd">Add concert</button>
-            <div class="add__container" hidden>
+            <button type="submit" id="btnAdd" class="addBtn">Add concert</button>
+            <div class="add__container" id="form2" hidden>
                 <label for="concert_artist" >Artist</label>
                 <input type="text" id="add_artist">
 
@@ -57,7 +58,7 @@
                 <label for="concert_price">Price</label>
                 <input type="text" id="add_price">
 
-                <button type="submit" id="btnAddApi">Send</button>
+                <button type="submit" id="btnAddApi" class="btnSend">Send</button>
             </div>
         </section>
 
@@ -70,7 +71,7 @@
                 <h3>Concerts</h3>
                 <div class="bezoeker__concerten"></div>
             </div>
-            <div class="editB__container" hidden>
+            <div class="editB__container" id="form3" hidden>
                 <h3>Edit</h3>
                 <label for="concert_artist" >First name</label>
                 <input type="text" id="bezoeker_firstName">
@@ -84,10 +85,10 @@
                 <label for="concert_venue">E-mail</label>
                 <input type="text" id="bezoeker_email">
 
-                <button type="submit" id="btnEditB">Send</button>
+                <button type="submit" id="btnEditB" class="btnSend">Send</button>
             </div>
-            <button type="submit" id="btnAddB">Add visitor</button>
-            <div class="addB__container" hidden>
+            <button type="submit" id="btnAddB" class="addBtn">Add visitor</button>
+            <div class="addB__container" id="form4" hidden>
                 <label for="concert_artist" >First name</label>
                 <input type="text" id="add_firstName">
 
@@ -100,7 +101,7 @@
                 <label for="concert_venue">E-mail</label>
                 <input type="text" id="add_email">
 
-                <button type="submit" id="btnAddBApi">Send</button>
+                <button type="submit" id="btnAddBApi" class="btnSend">Send</button>
             </div>
         </section>
     </main>

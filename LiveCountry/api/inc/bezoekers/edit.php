@@ -1,12 +1,10 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
-// $conn via dbcon.php, ingeladen door concerten.php
 
 $raw = file_get_contents('php://input');
 $postvars = json_decode($raw, true);
 if (!is_array($postvars)) { $postvars = $_POST; }
 
-// verplicht: id + alle velden
 $required = ['id','first_name','last_name','birth_date','email'];
 $missing = [];
 foreach ($required as $k) {

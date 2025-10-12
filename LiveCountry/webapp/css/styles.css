@@ -1,23 +1,79 @@
+body{
+    font-family: "Cal Sans", sans-serif;
+}
+
 main, header{
     width: 960px;
     margin: auto;
-    border: 1px solid #000;
 }
 
 header{
     text-align: center;
+    padding: 20px;
 }
 
 main{
     display: flex;
     justify-content: space-around;
+    gap: 10px;
 }
 
 section{
-    border: 1px solid #f00;
     width: 100%;
 }
 
 .ok_message{
-	color: #080;
+    color: #080;
+}
+
+header{
+    color: #fff;
+    background-color: #000;
+    border-radius: 10px;
+}
+
+table{
+    background-color: #ddd;
+    width: 100%;
+    padding: 10px;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+button{
+    background-color: #000;
+    color: #f00;
+    padding: 7px 10px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    background-color: #f00;
+    color: #fff;
+}
+
+.addBtn{
+    margin-top: 20px;
+    align-self: right;
+}
+
+[hidden] { display: none !important; }
+
+#form, #form2, #form3, #form4{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 10px;
+    background-color: #ddd;
+    padding: 10px;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+.btnSend, .btnSend1{
+    margin-top: 10px;
 }

@@ -17,3 +17,4 @@
 - delete voor concerten en bezoekers ✅
 - post lukt voor allebei
 - put lukt ook voor allebei
+- gewerkt aan de opmaak
