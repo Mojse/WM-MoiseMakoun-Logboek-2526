@@ -19,6 +19,7 @@
 					<ion-item slot="start">€{{ price }}</ion-item>
 					<ion-label :title="id">{{ artist }}</ion-label>
 					<ion-item slot="end">{{ date }}</ion-item>
+					<ion-button id="open-toast" expand="block" @click="goToDetails(id)">Details</ion-button>
 				</ion-item>
 
 			</ion-list>
@@ -28,7 +29,7 @@
 
 <script setup>
 import { ref, inject } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonLabel, IonItem, onIonViewWillEnter } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonLabel, IonItem, onIonViewWillEnter, IonButton } from '@ionic/vue';
 
 const concerten = ref([]);
 
@@ -66,4 +67,9 @@ onIonViewWillEnter(() => {
 	// er zijn strategieën mogelijk om dit meer performant te cachen
 	getProducten();
 });
+
+function goToDetails(id){
+	console.log(id);
+	localStorage.setItem('id', id);
+}
 </script>

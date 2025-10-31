@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import HomePage from '../views/HomePage.vue'
 import TabAddConcertPage from '../views/TabAddConcertPage.vue';
 import TabAddVisitorPage from '../views/TabAddVisitorPage.vue';
+import TabVisitorDetails from '../views/TabVisitorDetails.vue';
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
   path: '/addvisitor',     // de URL in de browser
   name: 'AddVisitor',      // optioneel, maar handig
   component: TabAddVisitorPage
+  },
+  {
+  path: '/visitorDetails',     // de URL in de browser
+  name: 'VisitorDetails',      // optioneel, maar handig
+  component: TabVisitorDetails
   }
 ]
 
