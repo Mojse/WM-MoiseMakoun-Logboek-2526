@@ -30,3 +30,4 @@
 - Ionic taak update: Pagina voor het maken van bezoekers aangemaakt. Die van de concerten had ik al in de les gedaan.
 - IonicToast toegevoegd bij het toevoegen
 - Visitor details pagina aangemaakt. Ik heb gebruik gemaakt van de localstorage om data door te geven van de ene pagina naa r de andere
+- Concert details pagina aangemaakt. 

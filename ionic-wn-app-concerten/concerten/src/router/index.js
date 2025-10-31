@@ -3,6 +3,7 @@ import HomePage from '../views/HomePage.vue'
 import TabAddConcertPage from '../views/TabAddConcertPage.vue';
 import TabAddVisitorPage from '../views/TabAddVisitorPage.vue';
 import TabVisitorDetails from '../views/TabVisitorDetails.vue';
+import TabConcertDetails from '../views/TabConcertDetails.vue';
 
 const routes = [
   {
@@ -28,6 +29,11 @@ const routes = [
   path: '/visitorDetails',     // de URL in de browser
   name: 'VisitorDetails',      // optioneel, maar handig
   component: TabVisitorDetails
+  },
+  {
+  path: '/concertDetails',     // de URL in de browser
+  name: 'ConcertDetails',      // optioneel, maar handig
+  component: TabConcertDetails
   }
 ]
 
