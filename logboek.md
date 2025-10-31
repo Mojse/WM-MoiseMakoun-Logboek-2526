@@ -25,3 +25,7 @@
 
 # github repo naar project
 - https://github.com/Mojse/WM-MoiseMakoun-Logboek-2526/tree/main/LiveCountry
+
+# Week ...
+- Ionic taak update: Pagina voor het maken van bezoekers aangemaakt. Die van de concerten had ik al in de les gedaan.
+- IonicToast toegevoegd bij het toevoegen
