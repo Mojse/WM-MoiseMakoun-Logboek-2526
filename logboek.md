@@ -31,3 +31,4 @@
 - IonicToast toegevoegd bij het toevoegen
 - Visitor details pagina aangemaakt. Ik heb gebruik gemaakt van de localstorage om data door te geven van de ene pagina naa r de andere
 - Concert details pagina aangemaakt. 
+- Concert aanpassen gelukt. Ik heb die code in dezelfde vue gezet als mijn add concert tab omdat ik niet te veel tabs wou

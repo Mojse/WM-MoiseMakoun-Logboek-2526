@@ -53,7 +53,8 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
+import { ref, inject } from 'vue';
+const axios = inject('axios') // inject axios
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonButton, IonToast } from '@ionic/vue';
 
 const concertArtist = ref('');
@@ -62,7 +63,29 @@ const concertVenue = ref('');
 const concertDate = ref('')
 const concertHour = ref('');
 
-const axios = inject('axios') // inject axios
+const isEdit = localStorage.getItem('edit');
+const lsId = localStorage.getItem('id');
+
+if (isEdit == 'true') {
+	axios
+		.get(`https://makoun.be/LiveCountry/api/concerten.php?id=${lsId}`)
+		.then(response => {
+			if (response.status !== 200) {
+				console.log(response.status);
+			}
+			if (!response.data.data) {
+				console.log('response.data.data is not ok');
+				return;
+			}
+			console.log(response.data);
+            concertArtist.value = response.data.data.artist;
+			concertPrice.value = response.data.data.price;
+			concertVenue.value = response.data.data.venue;
+			concertDate.value = response.data.data.date;
+			concertHour.value = response.data.data.hour;
+		});
+}
+
 const postConcert = () => {
 	axios
 		.post('https://makoun.be/LiveCountry/api/concerten.php/', {
@@ -92,6 +115,35 @@ const postConcert = () => {
 		});
 }
 
+
+const putConcert = () => {
+	axios
+		.put(`https://makoun.be/LiveCountry/api/concerten.php?id=${lsId}`, {
+			id: lsId,
+			artist: concertArtist.value,
+			date: concertDate.value,
+			hour: concertHour.value,
+            venue: concertVenue.value,
+            price: concertPrice.value
+		})
+		.then(response => {
+			// controleer de response
+			console.log(response);
+			if (response.status !== 200) {
+				console.log(response.status);
+			} else {
+				// maak de velden leeg
+				concertArtist.value = '';
+				concertDate.value = '';
+				concertHour.value = '';
+                concertPrice.value = 0;
+                concertVenue.value = '';
+				//TODO: Bevestig dat het product is toegevoegd
+				// mogelijk met https://ionicframework.com/docs/api/toast
+			}
+		});
+}
+
 const logConcert = () => {
 	console.log(`naam: ${concertArtist.value}, date: ${concertDate.value}, price: ${concertPrice.value}`);
 };
@@ -99,7 +151,12 @@ const logConcert = () => {
 const verzendProduct = () => {
 	// TODO: dit verder uitwerken en effectief het product verzenden
 	logConcert();
-	postConcert();
+	if (isEdit == 'true') {
+		putConcert();
+	}
+	else{
+		postConcert();
+	}
 };
 
 </script>

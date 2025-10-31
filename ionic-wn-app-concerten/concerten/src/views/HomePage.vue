@@ -20,6 +20,8 @@
 					<ion-label :title="id">{{ artist }}</ion-label>
 					<ion-item slot="end">{{ date }}</ion-item>
 					<ion-button id="open-toast" expand="block" @click="goToDetails(id)">Details</ion-button>
+					<ion-button id="open-toast" expand="block" @click="goToEdit(id)">Edit</ion-button>
+					<ion-button id="open-toast" expand="block" @click="deleteSelected(id, 1)">Delete</ion-button>
 				</ion-item>
 
 			</ion-list>
@@ -72,4 +74,32 @@ function goToDetails(id){
 	console.log(id);
 	localStorage.setItem('id', id);
 }
+
+function deleteSelected(id, type){
+	console.log(id);
+	let url = '';
+		if (type == 1) {
+			url = `https://makoun.be/LiveCountry/api/concerten.php?id=${id}`;
+		} else {
+			url = `https://makoun.be/LiveCountry/api/bezoekers.php?id=${id}`;
+		}
+	axios
+		.delete(url)
+		.then(response => {
+			if (response.status !== 200) {
+				console.log(response.status);
+			}
+			if (!response.data.data) {
+				console.log('response.data.data is not ok');
+				return;
+			}
+		});
+}
+
+function goToEdit(id){
+	console.log(id);
+	localStorage.setItem('id', id);
+	localStorage.setItem('edit', 'true');
+}
+
 </script>
