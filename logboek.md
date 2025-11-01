@@ -37,3 +37,4 @@
 - delay toegevoegd voor delete. Ik heb inde code bijgeschreven waarom
 - navigatiebalk beneden toegevogd
 - kleine text bij about me
+- Het maken van een ticket ✅
