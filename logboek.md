@@ -35,3 +35,5 @@
 - Bezoekers toegevoegd aan de homepage. 
 - Ervoor gezorgd dat er naar verschillende pagina's gesurft kan worden a.d.h.v. die buttons (details, edit) met javascript (windows.location) 
 - delay toegevoegd voor delete. Ik heb inde code bijgeschreven waarom
+- navigatiebalk beneden toegevogd
+- kleine text bij about me

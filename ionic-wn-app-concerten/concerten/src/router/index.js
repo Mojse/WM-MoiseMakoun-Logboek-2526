@@ -4,38 +4,27 @@ import TabAddConcertPage from '../views/TabAddConcertPage.vue';
 import TabAddVisitorPage from '../views/TabAddVisitorPage.vue';
 import TabVisitorDetails from '../views/TabVisitorDetails.vue';
 import TabConcertDetails from '../views/TabConcertDetails.vue';
+import TabsPage from '../views/TabsPage.vue'
 
+// src/router/index.ts
 const routes = [
   {
     path: '/',
-    redirect: '/home'
+    component: TabsPage,          // <-- bevat ion-tabs
+    children: [
+      { path: '', redirect: '/home' },
+      { path: 'home', component: HomePage },
+      { path: 'makenew', component: () => import('@/views/TabNieuw.vue') },
+      { path: 'aboutme', component: () => import('@/views/TabAboutMe.vue') },
+    ],
   },
-  {
-    path: '/home',
-    name: 'Home',
-    component: HomePage
-  },
-  {
-  path: '/addconcert',     // de URL in de browser
-  name: 'AddConcert',      // optioneel, maar handig
-  component: TabAddConcertPage
-  },
-  {
-  path: '/addvisitor',     // de URL in de browser
-  name: 'AddVisitor',      // optioneel, maar handig
-  component: TabAddVisitorPage
-  },
-  {
-  path: '/visitorDetails',     // de URL in de browser
-  name: 'VisitorDetails',      // optioneel, maar handig
-  component: TabVisitorDetails
-  },
-  {
-  path: '/concertDetails',     // de URL in de browser
-  name: 'ConcertDetails',      // optioneel, maar handig
-  component: TabConcertDetails
-  }
+
+  { path: '/addconcert', component: TabAddConcertPage },
+  { path: '/addvisitor', component: TabAddVisitorPage },
+  { path: '/visitordetails', component: TabVisitorDetails },
+  { path: '/concertdetails', component: TabConcertDetails },
 ]
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

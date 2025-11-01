@@ -1,25 +1,24 @@
 <template>
   <ion-page>
-    <ion-tabs>
-      <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="tab1" href="/tabs/tabNieuw">
-          <ion-icon aria-hidden="true" :icon="addCircle" />
-          <ion-label>Nieuw</ion-label>
-        </ion-tab-button>
+  <ion-tabs>
+    <ion-router-outlet />
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home" href="/home">
+        <ion-icon :icon="listOutline" />
+        <ion-label>Overzicht</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="make" href="/makenew">
+        <ion-icon :icon="addCircle" />
+        <ion-label>Nieuw</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="about" href="/aboutme">
+        <ion-icon :icon="constructSharp" />
+        <ion-label>Over mij</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-page>
 
-        <ion-tab-button tab="tab2" href="/tabs/tabOverzicht">
-          <ion-icon aria-hidden="true" :icon="listOutline" />
-          <ion-label>Overzicht</ion-label>
-        </ion-tab-button>
-
-        <ion-tab-button tab="tab3" href="/tabs/tabExperiment">
-          <ion-icon aria-hidden="true" :icon="constructSharp" />
-          <ion-label>Experimento</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-page>
 </template>
 
 <script setup>
