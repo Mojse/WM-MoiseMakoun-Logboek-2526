@@ -49,6 +49,8 @@
 </template>
 
 <script setup>
+
+const axios = inject('axios') // inject axios
 import { ref, inject } from 'vue'
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonButton, IonToast } from '@ionic/vue';
 
@@ -57,7 +59,28 @@ const lastName = ref('');
 const birthDate = ref('');
 const email = ref('')
 
-const axios = inject('axios') // inject axios
+const isEdit = localStorage.getItem('edit');
+const lsId = localStorage.getItem('id');
+
+if (isEdit == 'true') {
+	axios
+		.get(`https://makoun.be/LiveCountry/api/bezoekers.php?id=${lsId}`)
+		.then(response => {
+			if (response.status !== 200) {
+				console.log(response.status);
+			}
+			if (!response.data.data) {
+				console.log('response.data.data is not ok');
+				return;
+			}
+			console.log(response.data);
+            firstName.value = response.data.data.first_name;
+			lastName.value = response.data.data.last_name;
+			birthDate.value = response.data.data.birth_date;
+			email.value = response.data.data.email;
+		});
+}
+
 const postVisitor = () => {
 	axios
 		.post('https://makoun.be/LiveCountry/api/bezoekers.php/', {
@@ -85,6 +108,32 @@ const postVisitor = () => {
 		});
 }
 
+const putVisitor = () => {
+	axios
+		.put(`https://makoun.be/LiveCountry/api/bezoekers.php?id=${lsId}`, {
+			id: lsId,
+			first_name: firstName.value,
+			last_name: lastName.value,
+			birth_date: birthDate.value,
+            email: email.value,
+		})
+		.then(response => {
+			// controleer de response
+			console.log(response);
+			if (response.status !== 200) {
+				console.log(response.status);
+			} else {
+				// maak de velden leeg
+				firstName.value = '';
+				lastName.value = '';
+				birthDate.value = '';
+                email.value = '';
+				//TODO: Bevestig dat het product is toegevoegd
+				// mogelijk met https://ionicframework.com/docs/api/toast
+			}
+		});
+}
+
 const logVisitor = () => {
 	console.log(`first name: ${firstName.value}, last name: ${lastName.value}`);
 };
@@ -92,7 +141,13 @@ const logVisitor = () => {
 const verzendProduct = () => {
 	// TODO: dit verder uitwerken en effectief het product verzenden
 	logVisitor();
-	postVisitor();
+	if (isEdit == 'true') {
+		putVisitor();
+	} else {
+		postVisitor();
+	}
+	localStorage.setItem('edit', false);
+	window.location.href = 'home';
 };
 
 </script>

@@ -157,6 +157,8 @@ const verzendProduct = () => {
 	else{
 		postConcert();
 	}
+	localStorage.setItem('edit', 'false');
+	window.location.href = 'home';
 };
 
 </script>
