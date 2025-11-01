@@ -23,6 +23,7 @@
 					<ion-button id="open-toast" expand="block" @click="goToDetails(id, 1)">Details</ion-button>
 					<ion-button id="open-toast" expand="block" @click="goToEdit(id, 1)">Edit</ion-button>
 					<ion-button id="open-toast" expand="block" @click="deleteSelected(id, 1)">Delete</ion-button>
+					<ion-toast trigger="open-toast" message="Concert successfully deleted!" duration="5000"></ion-toast>
 				</ion-item>
 
 			</ion-list>
@@ -42,9 +43,10 @@
 					<ion-item slot="start">{{ first_name }}</ion-item>
 					<ion-label :title="id">{{ last_name }}</ion-label>
 					<ion-item>{{ email }}</ion-item>
-					<ion-button id="open-toast" expand="block" @click="goToDetails(id, 2)">Details</ion-button>
-					<ion-button id="open-toast" expand="block" @click="goToEdit(id, 2)">Edit</ion-button>
-					<ion-button id="open-toast" expand="block" @click="deleteSelected(id, 2)">Delete</ion-button>
+					<ion-button expand="block" @click="goToDetails(id, 2)">Details</ion-button>
+					<ion-button expand="block" @click="goToEdit(id, 2)">Edit</ion-button>
+					<ion-button id="open-toast2" expand="block" @click="deleteSelected(id, 2)">Delete</ion-button>
+					<ion-toast trigger="open-toast2" message="Visitor successfully deleted!" duration="5000"></ion-toast>
 				</ion-item>
 
 			</ion-list>
@@ -54,7 +56,7 @@
 
 <script setup>
 import { ref, inject } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonLabel, IonItem, onIonViewWillEnter, IonButton } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonLabel, IonItem, onIonViewWillEnter, IonButton, IonToast } from '@ionic/vue';
 
 const concerten = ref([]);
 const bezoekers = ref([]);

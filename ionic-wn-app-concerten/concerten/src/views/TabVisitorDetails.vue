@@ -15,17 +15,17 @@
 			<!-- We zorgen er hier voor dat de PR_ID getoond wordt 'on hover' -->
 			<!-- Kan je de product categorie id tonen wanneer over de categorienaam wordt 'gehoverd' ?-->
 			<ion-list>
-				<ion-item>{{bezoekerData.first_name}}</ion-item>
-                <ion-item>{{bezoekerData.last_name}}</ion-item>
-                <ion-item>{{bezoekerData.birth_date}}</ion-item>
-                <ion-item>{{bezoekerData.email}}</ion-item>
+				<ion-item><b>First Name: &nbsp;</b>{{bezoekerData.first_name}}</ion-item>
+                <ion-item><b>Last Name: &nbsp;</b>{{bezoekerData.last_name}}</ion-item>
+                <ion-item><b>Birth Date: &nbsp;</b>{{bezoekerData.birth_date}}</ion-item>
+                <ion-item><b>Email: &nbsp;</b>{{bezoekerData.email}}</ion-item>
 			</ion-list>
             <ion-title>Concerts</ion-title>
             <ion-list>
 				<ion-item v-for="{ id, artist, date, price } in bezoekerConcerten" :key="id">
-					<ion-item slot="start">€{{ price }}</ion-item>
+					<ion-label>€{{ price }}</ion-label>
 					<ion-label :title="id">{{ artist }}</ion-label>
-					<ion-item slot="end">{{ date }}</ion-item>
+					<ion-label>{{ date }}</ion-label>
 				</ion-item>
 
 			</ion-list>

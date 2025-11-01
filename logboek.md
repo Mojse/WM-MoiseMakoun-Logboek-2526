@@ -38,3 +38,4 @@
 - navigatiebalk beneden toegevogd
 - kleine text bij about me
 - Het maken van een ticket ✅
+- About me aangepast en een paar touches aan de layout

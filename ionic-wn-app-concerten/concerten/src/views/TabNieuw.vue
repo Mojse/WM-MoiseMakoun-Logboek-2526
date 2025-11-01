@@ -8,6 +8,7 @@
 
         <ion-content>
             <ion-list>
+                <ion-title>Make a ticket</ion-title>
                 <ion-item>
                     <ion-select label="Bezoeker" label-placement="floating" v-model="selectedVisitor">
                     <ion-select-option v-for="{ id, first_name, last_name } in bezoekers" :key="id" :value="id">{{first_name}} {{last_name}}</ion-select-option>
@@ -20,11 +21,22 @@
                     </ion-select>
                 </ion-item>
 
+                <ion-button id="open-toast" expand="block" @click="postTicket()">Send</ion-button>
+				<ion-toast trigger="open-toast" message="Ticket has successfully been made!" duration="5000"></ion-toast>
+            </ion-list>
+            <ion-title>Other options</ion-title>
                 <ion-item>
-                    <ion-button id="open-toast" expand="block" @click="postTicket()">Send</ion-button>
-				    <ion-toast trigger="open-toast" message="Ticket has successfully been made!" duration="5000"></ion-toast>
+                    <ion-label>Add a visitor</ion-label>
+                    <ion-button id="open-toast" expand="block" @click="addOtherOption(1)">Add</ion-button>
                 </ion-item>
-        </ion-list>
+
+                <ion-item>
+                    <ion-label>Add a concert</ion-label>
+                    <ion-button id="open-toast" expand="block" @click="addOtherOption(2)">Add</ion-button>
+                </ion-item>
+            <ion-list>
+
+            </ion-list>
         </ion-content>
     </ion-page>
 </template>
@@ -33,7 +45,7 @@
 
 const axios = inject('axios') // inject axios
 import { ref, inject } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, onIonViewWillEnter, IonItem, IonSelect, IonSelectOption, IonList, IonButton, IonToast } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, onIonViewWillEnter, IonItem, IonSelect, IonSelectOption, IonList, IonButton, IonToast, IonLabel } from '@ionic/vue';
 
 const concerten = ref([]);
 const bezoekers = ref([]);
@@ -102,6 +114,14 @@ const postTicket = () => {
 				// mogelijk met https://ionicframework.com/docs/api/toast
 			}
 		});
+}
+
+function addOtherOption(option){
+    if (option == 1) {
+        window.location.href = 'addvisitor';
+    } else {
+        window.location.href = 'addconcert';
+    }
 }
 
 onIonViewWillEnter(() => {
