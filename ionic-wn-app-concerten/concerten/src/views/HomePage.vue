@@ -59,6 +59,8 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonLabel
 const concerten = ref([]);
 const bezoekers = ref([]);
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 const axios = inject('axios') // inject axios
 const getProducten = () => {
 	axios
@@ -115,7 +117,7 @@ function goToDetails(id, type){
 	}
 }
 
-function deleteSelected(id, type){
+async function deleteSelected(id, type){
 	console.log(id);
 	let url = '';
 		if (type == 1) {
@@ -134,6 +136,10 @@ function deleteSelected(id, type){
 				return;
 			}
 		});
+	// deze delay doe zet ik er bij omdat hij anders niet genoeg tijd heeft voor de delete uit te voeren voor de refresh denk ik (het werkt alleszins)
+	// code voor delay van https://stackoverflow.com/questions/14226803/wait-5-seconds-before-executing-next-line
+	await delay(1000);
+	window.location.href = 'home';
 }
 
 function goToEdit(id, type){

@@ -34,3 +34,4 @@
 - Concert aanpassen gelukt. Ik heb die code in dezelfde vue gezet als mijn add concert tab omdat ik niet te veel tabs wou
 - Bezoekers toegevoegd aan de homepage. 
 - Ervoor gezorgd dat er naar verschillende pagina's gesurft kan worden a.d.h.v. die buttons (details, edit) met javascript (windows.location) 
+- delay toegevoegd voor delete. Ik heb inde code bijgeschreven waarom
