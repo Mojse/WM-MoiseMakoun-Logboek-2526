@@ -48,7 +48,7 @@
                             <li>Weetjes: Charmant, intelligent, grappig, houdt van Tresor cornflakes</li>
                         </ul>
                     </div>
-                    <img src="imgs/picture.jpeg" alt="picture">
+                    <img src="/public/picture.jpeg" alt="picture">
                 </div>
             </ion-item>
            
@@ -64,17 +64,5 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem } from '@
 </script>
 
 <style>
-.container{
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
-    padding: 0% 10% 0% 10%;
-}
-.text{
-    width: 50%;
-}
-img{
-    height: 100%;
-    width: 30%;
-}
+
 </style>

@@ -39,7 +39,7 @@
 				<ion-row>
 					<ion-col>
 						<ion-button id="open-toast" expand="block" @click="verzendProduct()">Confirm</ion-button>
-						<ion-toast trigger="open-toast" message="Database has been updated!!" duration="5000"></ion-toast>
+						<ion-toast trigger="open-toast" message="Database has been updated!" duration="5000"></ion-toast>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
